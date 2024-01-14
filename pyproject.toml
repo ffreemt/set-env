@@ -1,5 +1,5 @@
 [project]
-name = "set-env"
+name = "set-env-colab-kaggle-dotenv"
 version = "0.1.0"
 description = "Set an environ variable in colab/kaggle/dotenv(.env/dotenv/env)"
 authors = [

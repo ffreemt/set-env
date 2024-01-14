@@ -12,7 +12,7 @@ When running an ipynb in a cloud instance, we may use `dotenv` (`pip install pyt
 
 ## Install
 ```
-pip install set-env
+pip install set-env-colab-kaggle-dotenv
 ```
 
 ## Use it
