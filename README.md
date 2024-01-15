@@ -21,6 +21,8 @@ pip install set-env-colab-kaggle-dotenv
 
 * In colab, set Secrets
 
+    <img src="./img/colab.png" width="300" />
+
     ![](img/colab.png)
 
 * In kaggle, set Add-ons/Secrets
