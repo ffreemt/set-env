@@ -18,6 +18,7 @@ jobs:
       - name: Python Setup Rye
         uses:  eifinger/setup-rye@v1
       - name: Install packages
-        run: source "/home/runner/work/_temp/rye_temp_home/env" && rye sync
+        # run: source "/home/runner/work/_temp/rye_temp_home/env" && rye sync
+        run: /opt/hostedtoolcache/rye/0.16.0/x86_64/rye sync
       - name: Run pytest
-        run: rye run pytest tests
+        run: /opt/hostedtoolcache/rye/0.16.0/x86_64/rye run pytest tests
