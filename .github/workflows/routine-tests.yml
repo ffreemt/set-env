@@ -1,0 +1,25 @@
+name: pytest
+
+on:
+  push:
+
+jobs:
+  flake8-pytest:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.8]
+        poetry-version: [1.5.1]
+        os: [ubuntu-20.04, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Python Setup Rye
+        uses: eifinger/setup-rye@v1.7.0
+      - name: Install packages
+        run: rye sync  # --no-dev
+      - name: Run pytest
+        run: rye run pytest tests

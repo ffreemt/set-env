@@ -5,6 +5,8 @@ description = "Set an environ variable in colab/kaggle/dotenv(.env/dotenv/env)"
 authors = [
     { name = "ffreemt"}
 ]
+repository = "https://github.com/ffreemt/set-env"
+
 dependencies = [
     "python-dotenv>=1.0.0",
     "loguru>=0.7.2",
