@@ -28,6 +28,7 @@ jobs:
           pwd
           dir
           rye toolchain fetch 3.12
+          rye toolchain list
       - name: rye sync
         # run: source "/home/runner/work/_temp/rye_temp_home/env" && rye sync
         run: |
