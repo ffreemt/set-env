@@ -4,13 +4,14 @@ on:
   push:
 
 jobs:
-  flake8-pytest:
+  pytest:
     strategy:
       fail-fast: false
       matrix:
         python-version: [3.8]
-        poetry-version: [1.5.1]
-        os: [ubuntu-20.04, macos-latest, windows-latest]
+        # poetry-version: [1.5.1]
+        # os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -20,6 +21,6 @@ jobs:
       - name: Python Setup Rye
         uses: eifinger/setup-rye@v1.7.0
       - name: Install packages
-        run: rye sync  # --no-dev
+        run: /home/runner/work/_temp/rye_temp_home/shims/rye sync
       - name: Run pytest
-        run: rye run pytest tests
+        run: /home/runner/work/_temp/rye_temp_home/shims/rye run pytest tests
