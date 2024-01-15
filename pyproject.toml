@@ -1,12 +1,13 @@
 [project]
 name = "set-env-colab-kaggle-dotenv"
-version = "0.1.0"
+version = "0.1.1"
 description = "Set an environ variable in colab/kaggle/dotenv(.env/dotenv/env)"
 authors = [
     { name = "ffreemt"}
 ]
 dependencies = [
     "python-dotenv>=1.0.0",
+    "loguru>=0.7.2",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
@@ -21,10 +22,9 @@ build-backend = "hatchling.build"
 [tool.rye]
 managed = true
 dev-dependencies = [
-    "pytest>=7.4.4",
     "ipython>=8.12.3",
-    "pip>=23.3.2",
     "ruff>=0.1.13",
+    "pytest>=7.4.4",
 ]
 
 [tool.hatch.metadata]
