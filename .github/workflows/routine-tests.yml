@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Python Setup Rye
-        uses:  uses: eifinger/setup-rye@v1
+        uses:  eifinger/setup-rye@v1
       - name: Install packages
         run: /home/runner/work/_temp/rye_temp_home/shims/rye sync
       - name: Run pytest
