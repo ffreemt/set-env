@@ -24,6 +24,6 @@ jobs:
           rye help
       - name: Install packages
         # run: source "/home/runner/work/_temp/rye_temp_home/env" && rye sync
-        run: /opt/hostedtoolcache/rye/0.16.0/x86_64/shims/rye sync
+        run: rye build
       - name: Run pytest
         run: /opt/hostedtoolcache/rye/0.16.0/x86_64/shims/rye run pytest tests
