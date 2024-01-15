@@ -32,7 +32,7 @@ jobs:
           rye toolchain fetch 3.12
           rye toolchain list
       - name: pin python
-        run: rye ${{ python-version }}
+        run: rye matrix.python-version
         # run: rye pin 3.12
       - name: rye sync
         # run: source "/home/runner/work/_temp/rye_temp_home/env" && rye sync
