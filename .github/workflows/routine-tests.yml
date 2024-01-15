@@ -19,12 +19,14 @@ jobs:
         uses:  eifinger/setup-rye@v1
         with:
           enable-cache: true
-          working-directory: set-env
+          # working-directory: set-env
       - name: rye help
         run: |
           # /opt/hostedtoolcache/rye/0.16.0/x86_64/shims/rye help  # OK
           source "/home/runner/work/_temp/rye_temp_home/env"
           rye help
+          pwd
+          dir
       - name: rye build/sync
         # run: source "/home/runner/work/_temp/rye_temp_home/env" && rye sync
         run: |
