@@ -23,11 +23,14 @@ pip install set-env-colab-kaggle-dotenv
 
     <img src="./img/colab.png" width="300" />
 
-    ![](img/colab.png)
+    <!---![](img/colab.png)-->
 
 * In kaggle, set Add-ons/Secrets
 
-    ![](img/kaggle.png)
+    <img src="./img/kaggle.png" width="300" />
+
+    <!---![](./img/kaggle.png)-->
+
 * In other jupyter environ/cloud instance, upload .env, with contents, e.g.
 ```
 HF_TOKEN=...
