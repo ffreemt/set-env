@@ -34,7 +34,7 @@ jobs:
       - name: rye sync
         # run: source "/home/runner/work/_temp/rye_temp_home/env" && rye sync
         run: |
-          rye build
-          # rye sync
+          # rye build
+          rye sync
       - name: Run pytest
         run: rye run pytest tests
