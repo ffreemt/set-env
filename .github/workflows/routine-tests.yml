@@ -27,10 +27,11 @@ jobs:
           rye help
           pwd
           dir
+          rye toolchain fetch 3.8
       - name: rye build/sync
         # run: source "/home/runner/work/_temp/rye_temp_home/env" && rye sync
         run: |
-          rye build
+          # rye build
           rye sync
       - name: Run pytest
         run: rye run pytest tests
