@@ -51,9 +51,11 @@ def set_env(
         try:
             os.environ[env_var] = userdata.get(source_var)
             logger.trace(f"colab: set {env_var}={source_var}")
-        except (userdata.SecretNotFoundError, userdata.NotebookAccessError):
+        except (userdata.SecretNotFoundError, userdata.NotebookAccessError) as exc:
+            logger.trace(exc)
             ...
     except ModuleNotFoundError:
+        logger.trace(" Not in colab ")
         ...
     if os.getenv(env_var):
         return os.getenv(env_var)
@@ -67,10 +69,12 @@ def set_env(
         try:
             os.environ[env_var] = user_secrets.get_secret(source_var)  # BackendError
             logger.trace(f"kaggle: set {env_var}={source_var}")
-        except kaggle_web_client.BackendError:
+        except kaggle_web_client.BackendError as exc:
+            logger.trace(exc)
             ...
     except ModuleNotFoundError:
         ...
+        logger.trace("not in kaggle")
 
     if os.getenv(env_var):
         return os.getenv(env_var)
@@ -80,8 +84,8 @@ def set_env(
     if envfile is None:
         for _ in [".env", "dotenv", "env"]:
             envfile = find_dotenv(_)
-            logger.trace(f"Found {envfile=}")
             if envfile:
+                logger.trace(f"Found {envfile=}")
                 break
 
     if envfile:
@@ -96,7 +100,7 @@ def set_env(
     logger.warning(
         f"""
         Unable to set {env_var}={source_var},
-        not in colab or Secret not set, not kaggle
+        not in colab or Secrets not set, not kaggle
         or Secrets not set, no .env/dotenv/env file
         in the current working dir or parent dirs."""
     )
@@ -105,5 +109,6 @@ def set_env(
     if override:
         if os.getenv(env_var) is not None:
             os.environ[env_var] = save_env_var
+        logger.trace(f"Restore {env_var=}")
 
     return None
