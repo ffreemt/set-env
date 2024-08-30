@@ -19,8 +19,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Python Setup Rye
         uses:  eifinger/setup-rye@v1
-        with:
-          enable-cache: true
+        # with:
+          # enable-cache: true
           # working-directory: set-env
       - name: rye help
         run: |

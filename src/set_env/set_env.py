@@ -2,9 +2,12 @@
 
 !pip install -q python-dotenv
 """
+# pylint: disable=import-outside-toplevel,too-many-statements,too-many-branches
+
 import os
 import sys
 
+from pathlib import Path
 from dotenv import dotenv_values, find_dotenv
 from loguru import logger
 
@@ -38,32 +41,32 @@ def set_env(
         logger.add(sys.stderr, level="TRACE")  # default "DEBUG"
 
     if override:
+        save_env_var = os.getenv(env_var)
         if os.getenv(env_var) is not None:
-            save_env_var = os.environ[env_var]
             del os.environ[env_var]
         logger.trace(f"{override=}")
 
     if source_var is None:
         source_var = env_var
     try:
-        from google.colab import userdata
+        from google.colab import userdata  # type: ignore
 
         try:
             os.environ[env_var] = userdata.get(source_var)
             logger.trace(f"colab: set {env_var}={source_var}")
         except (userdata.SecretNotFoundError, userdata.NotebookAccessError) as exc:
             logger.trace(exc)
-            ...
+
     except ModuleNotFoundError:
         logger.trace(" Not in colab ")
-        ...
+
     if os.getenv(env_var):
         return os.getenv(env_var)
 
     # not enabled or not exist: kaggle_web_client.BackendError
     try:
-        import kaggle_web_client
-        from kaggle_secrets import UserSecretsClient
+        import kaggle_web_client  # type: ignore
+        from kaggle_secrets import UserSecretsClient  # type: ignore
 
         user_secrets = UserSecretsClient()
         try:
@@ -71,9 +74,8 @@ def set_env(
             logger.trace(f"kaggle: set {env_var}={source_var}")
         except kaggle_web_client.BackendError as exc:
             logger.trace(exc)
-            ...
+
     except ModuleNotFoundError:
-        ...
         logger.trace("not in kaggle")
 
     if os.getenv(env_var):
@@ -81,9 +83,14 @@ def set_env(
 
     # .env dotenv env
     # envfile = None
+
+    # cwd
+    logger.trace(f'cwd: {Path.cwd()}')
+
     if envfile is None:
         for _ in [".env", "dotenv", "env"]:
-            envfile = find_dotenv(_)
+            filepath = Path.cwd() / _
+            envfile = find_dotenv(filepath.as_posix())
             if envfile:
                 logger.trace(f"Found {envfile=}")
                 break
@@ -91,7 +98,9 @@ def set_env(
     if envfile:
         print(f"loading {envfile=} with dotenv_values(envfile)")
         if dotenv_values(envfile).get(source_var):
-            os.environ[env_var] = dotenv_values(envfile).get(source_var)
+            _ = dotenv_values(envfile).get(source_var)
+            if _:  # need to be a str
+                os.environ[env_var] = _
             logger.trace(f"{envfile=}: set {env_var}={source_var}")
     if os.getenv(env_var):
         return os.getenv(env_var)
@@ -105,10 +114,13 @@ def set_env(
         in the current working dir or parent dirs."""
     )
 
-    # restore
+    # restore?
     if override:
-        if os.getenv(env_var) is not None:
-            os.environ[env_var] = save_env_var
+        # save_env_var may be None
+        if save_env_var:
+            if os.getenv(env_var) is not None:
+                os.environ[env_var] = save_env_var
+
         logger.trace(f"Restore {env_var=}")
 
     return None
