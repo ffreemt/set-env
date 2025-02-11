@@ -56,9 +56,10 @@ def set_env(
             logger.trace(f"colab: set {env_var}={source_var}")
         except (userdata.SecretNotFoundError, userdata.NotebookAccessError) as exc:
             logger.trace(exc)
-
-    except ModuleNotFoundError:
-        logger.trace(" Not in colab ")
+        except Exception as exc:
+            logger.trace(exc)
+    except ModuleNotFoundError:  # kaggle now includes google.colab, wont trigger
+        logger.trace(" legacy code ")
 
     if os.getenv(env_var):
         return os.getenv(env_var)
@@ -85,7 +86,7 @@ def set_env(
     # envfile = None
 
     # cwd
-    logger.trace(f'cwd: {Path.cwd()}')
+    logger.trace(f"cwd: {Path.cwd()}")
 
     if envfile is None:
         for _ in [".env", "dotenv", "env"]:
